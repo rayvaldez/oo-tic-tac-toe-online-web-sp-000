@@ -56,16 +56,37 @@ class TicTacToe
     turn_count % 2 == 0 ? "X" : "O"
   end
 
-def turn
-  puts "Please enter 1-9:"
-  input = gets.chomp
-  index = input_to_index(input)
-    if valid_move?(index) == true
-      player_token = current_player
-      move(index, player_token)
-      display_board
-    else
-      turn
+  def turn
+    puts "Please enter 1-9:"
+    input = gets.chomp
+    index = input_to_index(input)
+      if valid_move?(index) == true
+        player_token = current_player
+        move(index, player_token)
+        display_board
+      else
+        turn
+      end
     end
-  end
+
+    def won?
+      WIN_COMBINATIONS.each {|combination|
+        index_0 = combination[0]
+        index_1 = combination[1]
+        index_2 = combination[2]
+
+        position_1 = @board[index_0]
+        position_2 = @board[index_1]
+        position_3 = @board[index_2]
+
+        if position_1 == "X" && position_2 == "X" && position_3 == "X"
+          return combination
+        elsif position_1 == "O" && position_2 == "O" && position_3 == "O"
+          return combination
+        end
+      }
+      return false
+    end
+
+
 end
